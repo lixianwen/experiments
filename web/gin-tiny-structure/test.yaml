@@ -1,0 +1,20 @@
+http:
+    host: localhost
+    port: 8090
+logger:
+    addsource: false
+    # debug = -4
+	# info = 0
+	# warn = 4
+	# error = 8
+    level: -4
+mysql:
+    database: swtest_test
+    host: localhost
+    password: qwer
+    port: 3306
+    user: root
+    debug: true
+jwt:
+    # unit: minute
+    expiration: 1
