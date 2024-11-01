@@ -36,7 +36,8 @@ func SignIn(c *gin.Context) {
 	}
 
 	if tokenString, err := jwthelper.GenerateToken(); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		slog.Error("SignIn - jwthelper.GenerateToken", "error", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": http.StatusText(http.StatusInternalServerError)})
 	} else {
 		c.JSON(http.StatusOK, gin.H{"token": tokenString})
 	}
@@ -50,7 +51,8 @@ func SignUp(c *gin.Context) {
 	}
 
 	if err := user.Create(); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		slog.Error("SignUp - user.Create", "error", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": http.StatusText(http.StatusInternalServerError)})
 		return
 	}
 
@@ -75,7 +77,8 @@ func Refresh(c *gin.Context) {
 		c.Status(http.StatusNotModified)
 	} else if remain > 0 {
 		if tokenString, err := jwthelper.GenerateToken(); err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			slog.Error("Refresh - jwthelper.GenerateToken", "error", err)
+			c.JSON(http.StatusInternalServerError, gin.H{"error": http.StatusText(http.StatusInternalServerError)})
 		} else {
 			c.JSON(http.StatusOK, gin.H{"token": tokenString})
 		}

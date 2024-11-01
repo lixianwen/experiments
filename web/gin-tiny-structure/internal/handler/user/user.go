@@ -35,8 +35,8 @@ func GetAllUsers(c *gin.Context) {
 		}
 		c.JSON(http.StatusOK, gin.H{"users": resp})
 	} else {
-		slog.Error("GetAllUsers", "err", err)
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		slog.Error("GetAllUsers - user.All", "err", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": http.StatusText(http.StatusInternalServerError)})
 	}
 }
 
@@ -48,7 +48,8 @@ func CreateUser(c *gin.Context) {
 	}
 
 	if err := user.Create(); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		slog.Error("CreateUser - user.Create", "err", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": http.StatusText(http.StatusInternalServerError)})
 		return
 	}
 
