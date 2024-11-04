@@ -108,6 +108,20 @@ func GetUser(c *gin.Context) {
 	}
 }
 
+// UpdateUser godoc
+//
+//	@Summary		Update a user
+//	@Description	Update by json user
+//	@Tags			user
+//	@Accept			json
+//	@Produce		json
+//	@Param			id		path	int			true	"User ID"
+//	@Param			payload	body	models.User	true	"Update user payload"
+//	@Security		ApiKeyAuth
+//	@Success		200	{object}	UserResponse
+//	@Failure		400	{object}	gin.H
+//	@Failure		401	{object}	gin.H
+//	@Router			/api/user/{id} [put]
 func UpdateUser(c *gin.Context) {
 	id := c.Param("id")
 	var user models.User
