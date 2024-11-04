@@ -8,7 +8,7 @@ import (
 )
 
 type User struct {
-	gorm.Model
+	gorm.Model `swaggerignore:"true"`
 	Name       string     `json:"name" gorm:"unique"`
 	Email      string     `json:"email" binding:"email"`
 	Age        int        `json:"age" binding:"min=0,max=100" gorm:"default:18"`
@@ -17,9 +17,9 @@ type User struct {
 }
 
 type CreditCard struct {
-	gorm.Model
-	Number string `json:"cid"`
-	UserID uint   `json:"-"`
+	gorm.Model `swaggerignore:"true"`
+	Number     string `json:"cid"`
+	UserID     uint   `json:"-"`
 }
 
 // All returns all the users in the table users.

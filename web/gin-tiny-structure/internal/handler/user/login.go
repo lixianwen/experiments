@@ -17,6 +17,18 @@ type SignInPayload struct {
 	Password string `json:"password" binding:"required"`
 }
 
+// SignIn doc
+//
+//	@Description	user sign in
+//	@Tags			user
+//	@Accept			json
+//	@Produce		json
+//	@Param			payload	body		SignInPayload	true	"User sign in payload"
+//	@Success		200		{object}	gin.H			"{token:string}"
+//	@Failure		400		{object}	gin.H
+//	@Failure		401		{object}	gin.H
+//	@Failure		500		{object}	gin.H
+//	@Router			/signin [post]
 func SignIn(c *gin.Context) {
 	var body SignInPayload
 	if err := c.ShouldBindJSON(&body); err != nil {
@@ -43,6 +55,17 @@ func SignIn(c *gin.Context) {
 	}
 }
 
+// SignUp godoc
+//
+//	@Description	user sign up
+//	@Tags			user
+//	@Accept			json
+//	@Produce		json
+//	@Param			payload	body		models.User	true	"User sign up payload"
+//	@Success		200		{object}	UserResponse
+//	@Failure		400		{object}	gin.H
+//	@Failure		500		{object}	gin.H
+//	@Router			/signup [post]
 func SignUp(c *gin.Context) {
 	var user models.User
 	if err := c.ShouldBindJSON(&user); err != nil {
@@ -61,6 +84,17 @@ func SignUp(c *gin.Context) {
 	c.JSON(http.StatusOK, resp)
 }
 
+// Refresh godoc
+//
+//	@Description	refresh your token
+//	@Tags			user
+//	@Produce		json
+//	@Security		ApiKeyAuth
+//	@Success		200	{object}	gin.H	"{token:string}"
+//	@Success		304
+//	@Failure		401	{object}	gin.H
+//	@Failure		500	{object}	gin.H
+//	@Router			/refresh [post]
 func Refresh(c *gin.Context) {
 	exp := c.GetFloat64("exp")
 	if exp == 0 {

@@ -26,6 +26,16 @@ func (r *UserResponse) FillFromModel(u models.User) {
 	r.CardID = u.CreditCard.Number
 }
 
+// GetAllUsers returns all of the persistent users.
+//
+//	@Description	get all users
+//	@Tags			user
+//	@Produce		json
+//	@Security		ApiKeyAuth
+//	@Success		200	{array}		UserResponse
+//	@Failure		401	{object}	gin.H
+//	@Failure		500	{object}	gin.H
+//	@Router			/api/users [get]
 func GetAllUsers(c *gin.Context) {
 	var user models.User
 	if users, err := user.All(); err == nil {
@@ -40,6 +50,19 @@ func GetAllUsers(c *gin.Context) {
 	}
 }
 
+// CreateUser creates a user.
+//
+//	@Description	create a user
+//	@Tags			user
+//	@Accept			json
+//	@Produce		json
+//	@Param			payload	body	models.User	true	"Add user"
+//	@Security		ApiKeyAuth
+//	@Success		201
+//	@Failure		400	{object}	gin.H
+//	@Failure		401	{object}	gin.H
+//	@Failure		500	{object}	gin.H
+//	@Router			/api/user [post]
 func CreateUser(c *gin.Context) {
 	var user models.User
 	if err := c.ShouldBindJSON(&user); err != nil {
@@ -56,6 +79,18 @@ func CreateUser(c *gin.Context) {
 	c.Status(http.StatusCreated)
 }
 
+// GetUser gets a specific user by the provided user ID.
+//
+//	@Summary		Show a user
+//	@Description	Get a user
+//	@Tags			user
+//	@Produce		json
+//	@Param			id	path	int	true	"User ID"
+//	@Security		ApiKeyAuth
+//	@Success		200	{object}	UserResponse
+//	@Failure		400	{object}	gin.H
+//	@Failure		401	{object}	gin.H
+//	@Router			/api/user/{id} [get]
 func GetUser(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
@@ -100,6 +135,18 @@ func UpdateUser(c *gin.Context) {
 	}
 }
 
+// DeleteUser deletes a specific user by the provided user ID.
+//
+//	@Summary		Delete a user
+//	@Description	Delete a user
+//	@Tags			user
+//	@Produce		json
+//	@Param			id	path	int	true	"User ID"
+//	@Security		ApiKeyAuth
+//	@Success		204
+//	@Failure		400	{object}	gin.H
+//	@Failure		401	{object}	gin.H
+//	@Router			/api/user/{id} [delete]
 func DeleteUser(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
