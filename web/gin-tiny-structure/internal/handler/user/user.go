@@ -33,7 +33,7 @@ func GetAllUsers(c *gin.Context) {
 		for i, u := range users {
 			resp[i].FillFromModel(*u)
 		}
-		c.JSON(http.StatusOK, gin.H{"users": resp})
+		c.JSON(http.StatusOK, resp)
 	} else {
 		slog.Error("GetAllUsers - user.All", "err", err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": http.StatusText(http.StatusInternalServerError)})
