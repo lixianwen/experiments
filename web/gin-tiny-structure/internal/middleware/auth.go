@@ -12,7 +12,7 @@ import (
 
 func Auth() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		tokenString := strings.TrimPrefix(c.GetHeader("Authorization"), "Beare ")
+		tokenString := strings.TrimPrefix(c.GetHeader("Authorization"), "Bearer ")
 		if tokenString == "" {
 			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "token is empty"})
 			return
